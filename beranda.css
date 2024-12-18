@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #7D3F98, #00AEEF, #1D1E6E);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+header {
+    background-color:#000000;
+    padding: 1rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #ffcc00;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-top: 20%;
+    color: white;
+}
+
+.welcome-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.welcome-section p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.get-started-btn, .dash-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.get-started-btn:hover, .dash-btn:hover {
+    background-color: #45a049;
+}
+
+.about-section {
+    padding: 2rem;
+    background-color: #fff;
+    border: 2px solid #000;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    font-size: 1rem;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #333;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.back-link:hover {
+    color: #ffcc00;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH Stream Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #7D3F98, #00AEEF, #1D1E6E);
+            text-align: center;
+            padding: 20px;
+        }
+
+        #video-container {
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+        }
+        video {
+            width: 80%;
+            height: auto;
+            border: 2px solid #000;
+        }
+        #dash-url {
+            padding: 10px;
+            width: 52%;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        #play-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #analytics {
+            margin-top: 20px;
+        }
+        .stat {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DASH Stream Player</h1>
+
+    <input type="text" id="dash-url" placeholder="Enter DASH URL" value="https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd">
+    <button id="play-btn">Play Stream</button>
+
+    <div id="video-container">
+        <video id="video" controls></video>
+    </div>
+
+    <div id="analytics">
+        <h2>Playback Analytics</h2>
+        <div class="stat">Bitrate: <span id="bitrate">0</span> kbps</div>
+        <div class="stat">Buffer Length: <span id="buffer-length">0</span> seconds</div>
+        <div class="stat">Dropped Frames: <span id="dropped-frames">0</span></div>
+    </div>
+
+    <!-- DASH.js Library -->
+    <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+
+    <script>
+        document.getElementById('play-btn').addEventListener('click', function() {
+            var video = document.getElementById('video');
+            var dashUrl = document.getElementById('dash-url').value;
+
+            if (dashUrl.trim() === "") {
+                alert("Please enter a valid DASH URL.");
+                return;
+            }
+
+            // Initialize DASH player
+            var player = dashjs.MediaPlayer().create();
+            player.initialize(video, dashUrl, true);
+
+            // Analytics
+            player.on(dashjs.MediaPlayer.events.STREAM_INITIALIZED, function() {
+                var metrics = player.getDashMetrics();
+                var bitrateInfo = player.getBitrateInfoListFor('video');
+                
+                // Function to update analytics in real time
+                setInterval(function() {
+                    var bitrate = metrics.getCurrentRepresentationSwitch('video').to || 0;
+                    var bufferLength = metrics.getCurrentBufferLevel('video') || 0;
+                    var droppedFrames = metrics.getDroppedFrames('video') || 0;
+
+                    document.getElementById('bitrate').textContent = bitrateInfo[bitrate].bandwidth / 1000;
+                    document.getElementById('buffer-length').textContent = bufferLength.toFixed(2);
+                    document.getElementById('dropped-frames').textContent = droppedFrames.droppedFrames || 0;
+                }, 1000);
+            });
+        });
+    </script>
+
+</body>
+</html>
